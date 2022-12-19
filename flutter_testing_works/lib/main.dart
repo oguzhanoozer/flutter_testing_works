@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_testing_works/favourite_list/view/favourite_view.dart';
+import 'package:flutter_testing_works/favourite_list/view/home_view.dart';
+import 'package:provider/provider.dart';
+
+import 'favourite_list/provider/favourite_list_provider.dart';
+
+enum routes { HomeView, FavouriteView }
 
 void main() => runApp(const MyApp());
 
@@ -7,15 +14,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Material App',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Material App Bar'),
-        ),
-        body: const Center(
-          child: Text('Hello World'),
-        ),
+    return ChangeNotifierProvider<Favourite>(
+      create: (context) => Favourite(),
+      child: MaterialApp(
+        routes: {
+          routes.HomeView.name: (context) => HomeView(),
+          routes.FavouriteView.name: (context) => FavouriteView(),
+        },
+        initialRoute: routes.HomeView.name,
       ),
     );
   }
